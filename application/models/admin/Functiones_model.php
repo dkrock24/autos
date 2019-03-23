@@ -77,15 +77,11 @@ class Functiones_model extends CI_Model {
         }
     }
 
-	function crear_giro( $nuevo_giro ){
+	function crear( $funciones ){
 
 		$data = array(
-            'nombre_giro' => $nuevo_giro['nombre_giro'],
-            'descripcion_giro' => $nuevo_giro['descripcion_giro'],
-            'tipo_giro' => $nuevo_giro['tipo_giro'],
-            'codigo_giro' => $nuevo_giro['codigo_giro'],
-            'estado_giro' => $nuevo_giro['estado_giro'],
-            'fecha_giro_creado' => date("Y-m-d h:i:s")
+            'Function_name' => $funciones['Function_name'],
+            'Function_status' => $funciones['Function_status'],
         );
 		$insert = $this->db->insert(self::functions, $data ); 
 
@@ -93,11 +89,11 @@ class Functiones_model extends CI_Model {
 
 	}
 
-	function get_giro_id( $id_giro ){ 
+	function editar( $function_id ){ 
 
 		$this->db->select('*');
         $this->db->from(self::functions);
-        $this->db->where('id_giro ='. $id_giro );
+        $this->db->where('Function_id ='. $function_id );
         $query = $this->db->get(); 
         //echo $this->db->queries[1];
         
@@ -107,17 +103,13 @@ class Functiones_model extends CI_Model {
         }
 	}
 
-	function actualizar_giro( $giro ){
+	function update( $funciones ){
 		$data = array(
-            'nombre_giro' => $giro['nombre_giro'],
-            'descripcion_giro' => $giro['descripcion_giro'],
-            'tipo_giro' => $giro['tipo_giro'],
-            'codigo_giro' => $giro['codigo_giro'],
-            'estado_giro' => $giro['estado_giro'],
-            'fecha_giro_actualizado' => date("Y-m-d h:i:s")
+            'Function_name' => $funciones['Function_name'],
+            'Function_status' => $funciones['Function_status'],
         );
-
-        $this->db->where('id_giro', $giro['id_giro']);
+        
+        $this->db->where('Function_id', $funciones['Function_id']);
         $insert = $this->db->update(self::functions, $data);  
         return $insert;
 	}

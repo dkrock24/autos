@@ -14,6 +14,61 @@ class Autos_model extends CI_Model {
     const carrental = 'carrental';   
     const gallerycar = 'gallerycar';   
 
+    //Catalog
+    function catalogo(){
+        $this->db->select('*');
+        $this->db->from(self::car.' as c');
+        $this->db->join(self::brand_line.' l', ' on c.Brand_Line_id = l.Brand_Line_id');
+        $this->db->join(self::brand.' b', ' on b.Brand_id = l.Brand_id');
+        $this->db->join(self::gallerycar.' g', ' on g.Car_id = c.Car_id');
+        //$this->db->where('c.Car_rental', 1 );
+        $query = $this->db->get(); 
+        //echo $this->db->queries[1];
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        }
+    }
+
+    function catalogo_alquiler(){
+        $this->db->select('*');
+        $this->db->from(self::car.' as c');
+        $this->db->join(self::brand_line.' l', ' on c.Brand_Line_id = l.Brand_Line_id');
+        $this->db->join(self::brand.' b', ' on b.Brand_id = l.Brand_id');
+        $this->db->join(self::gallerycar.' g', ' on g.Car_id = c.Car_id');
+        $this->db->where('c.Car_sale', 0 );
+        $query = $this->db->get(); 
+        //echo $this->db->queries[1];
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        }
+    }
+
+    function get_detalle_auto($id){
+        $this->db->select('*');
+        $this->db->from(self::car.' as c');
+        $this->db->join(self::brand_line.' l', ' on c.Brand_Line_id = l.Brand_Line_id');
+        $this->db->join(self::brand.' b', ' on b.Brand_id = l.Brand_id');
+        //$this->db->join(self::gallerycar.' g', ' on g.Car_id = c.Car_id');
+        $this->db->where('c.Car_id', $id );
+        $query = $this->db->get(); 
+        //echo $this->db->queries[1];
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        }
+    }
+
+    function get_detalle_funciones($id){
+        
+    }
+
+    //End Catalogo
+
     
     function getMoneda(  $limit, $id ){
     	$this->db->select('*');

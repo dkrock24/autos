@@ -40,7 +40,7 @@
 
                 success: function(data){
                     var datos = JSON.parse(data);
-                    var productos = datos["productos"];
+                    var productos = datos["detalle"];
                     
                     $.each(productos, function(i, item) {   
 

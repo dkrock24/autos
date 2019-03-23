@@ -71,15 +71,8 @@ class Functiones extends CI_Controller {
 
 		// paginacion End
 
-		$id_rol = $this->session->userdata['usuario'][0]->id_rol;
-
-		// Seguridad :: Validar URL usuario	
+		
 		$menu_session = $this->session->menu;	
-		//parametros($menu_session);
-
-		$id_rol = $this->session->roles[0];
-		$vista_id = 20; // Vista Orden Lista
-		$id_usuario 	= $this->session->usuario[0]->id_usuario;
 
 		$data['menu'] = $this->session->menu;
 		$data['column'] = $this->column();
@@ -87,57 +80,43 @@ class Functiones extends CI_Controller {
 		$data['contador_tabla'] = $contador_tabla;
 		
 		$data['registros'] = $this->Functiones_model->get_giros( $config["per_page"], $page );
-		$data['home'] = 'admin/giros/giros_lista';
+		$data['home'] = 'template/lista_template';
 
 		$this->parser->parse('template2', $data);
 	}
 
 	public function nuevo(){
 
-		$id_rol = $this->session->userdata['usuario'][0]->id_rol;
 
 		$data['menu'] = $this->session->menu;		
 		$data['home'] = 'admin/giros/giros_nuevo';
 
-		$this->parser->parse('template', $data);
+		$this->parser->parse('template2', $data);
 	}
 
 	public function crear(){
 		// Insert Nuevo Giro
-		$data = $this->Giros_model->crear_giro( $_POST );
+		$data = $this->Functiones_model->crear( $_POST );
 
-		if($data){
-			$this->session->set_flashdata('success', "Giro Fue Creado");
-		}else{
-			$this->session->set_flashdata('warning', "Giro No Fue Creado");
-		}	
-
-
-		redirect(base_url()."admin/giros/index");
+		redirect(base_url()."admin/functiones/index");
 	}
 
-	public function editar( $id_giro ){
+	public function editar( $function_id ){
 		
-		$id_rol = $this->session->userdata['usuario'][0]->id_rol;
+		
 
 		$data['menu'] = $this->session->menu;		
-		$data['giros'] = $this->Giros_model->get_giro_id( $id_giro );
+		$data['Funciones'] = $this->Functiones_model->editar( $function_id );
 		$data['home'] = 'admin/giros/giros_editar';
 
-		$this->parser->parse('template', $data);
+		$this->parser->parse('template2', $data);
 	}
 
-	public function actualizar(){
+	public function update(){
 		// Actualizar Giro 
-		$data = $this->Giros_model->actualizar_giro( $_POST );
+		$data = $this->Functiones_model->update( $_POST );
 
-		if($data){
-			$this->session->set_flashdata('info', " !");
-		}else{
-			$this->session->set_flashdata('warning', "El Registro No Fue Actualizado");
-		}
-
-		redirect(base_url()."admin/giros/index");
+		redirect(base_url()."admin/functiones/index");
 	}
 
 	public function get_atributos( $id_giro ){

@@ -18,6 +18,73 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/styles/main_styles.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/styles/responsive.css">
 
+<script src="<?php echo base_url(); ?>../asstes/vendor/jquery/dist/jquery.js"></script>
+
+<script type="text/javascript">
+
+    $(document).on('click', '.property_tag', function(){
+
+        var id = $(this).attr('id');
+        get_detalle_auto(id);
+
+        $('#detalle').modal('show');
+
+        
+    });
+
+    function get_detalle_auto(id){
+        var table = "<table class='table table-hover'>";            
+            table += "<th>Detalle</th>";
+        var table_tr = "<tbody id='list'>";
+
+        $.ajax({
+            url: "autos/get_detalle_auto/"+id,  
+            datatype: 'json',      
+            cache : false,                
+
+                success: function(data){
+                    var datos = JSON.parse(data);
+                    var productos = datos["detalle"];
+                    
+                    $.each(productos, function(i, item) {   
+
+                        table_tr += '<tr><td>'+item.Brand_name+" "+item.Brand_Line_name+" / "+item.Car_year+" / "+item.Car_color+'</td><td>';
+                        table_tr += '<tr><td>'+item.Car_description+'</td><td>';
+                        
+                    });
+
+                    funciones = datos["funciones"];
+                    table_tr += '<tr><td>';
+                    $.each(funciones, function(i, item) {   
+
+                        table_tr += item.Function_name+' / ';
+                        
+                    });
+                    table_tr += '</td><td>';
+
+                    accesorios = datos["accesorios"];
+                    table_tr += '<tr><td>';
+                    $.each(accesorios, function(i, item) {   
+
+                        table_tr += item.Accesorios_name+' / ';
+                        
+                    });
+                    table_tr += '</td><td>';
+
+                    
+                    table += table_tr;
+                    table += "</tbody></table>";
+
+                    $(".auto_detalle").html(table);
+                
+                },
+                error:function(){
+                }
+            });
+    }
+
+</script>
+
 
 </head>
 <body>
@@ -180,18 +247,17 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <div class="home_search_container">
+          <div class="home_search_container" style="width: 70%; left:15%;">
             <div class="home_search_content">
               <form action="#" class="search_form d-flex flex-row align-items-start justfy-content-start">
                 <div class="search_form_content d-flex flex-row align-items-start justfy-content-start flex-wrap">
-                  <div>
-                    <select class="search_form_select">
-                      <option disabled selected>Compra/Renta</option>
+                  <div style="width: 50%">
+                    <select class="search_form_select">                      
                       <option value="c">Comprar</option>
                       <option value="r">Rentar</option>
                     </select>
                   </div>
-                  <div>
+                  <div style="width: 50%;">
                     <select class="search_form_select form-control">
                       <?php
                       foreach ($brands as $key => $value) {
@@ -202,12 +268,7 @@
                       ?>
                     </select>
                   </div>
-                  <div>
-                    <select class="search_form_select">
-                      <option disabled selected>Ciudad</option>
-                      <option>Chalatenango</option>
-                    </select>
-                  </div>
+             
                 </div>
                 <button class="search_form_button ml-auto">search</button>
               </form>
@@ -224,8 +285,8 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <div class="section_title">Recent Properties</div>
-          <div class="section_subtitle">Search your dream home</div>
+          <div class="section_title">Venta y Alquiler</div>
+          <div class="section_subtitle">Los Mejores Precios</div>
         </div>
       </div>
       <div class="row recent_row">
@@ -234,70 +295,40 @@
             <div class="owl-carousel owl-theme recent_slider">
               
               <!-- Slide -->
-              <div class="owl-item">
-                <div class="recent_item">
-                  <div class="recent_item_inner">
-                    <div class="recent_item_image">
-                      <img src="<?php echo base_url(); ?>../asstes/images/property_1.jpg" alt="">
-                      <div class="tag_featured property_tag"><a href="#">Featured</a></div>
-                    </div>
-                    <div class="recent_item_body text-center">
-                      <div class="recent_item_location">Miami</div>
-                      <div class="recent_item_title"><a href="property.html">Sea view property</a></div>
-                      <div class="recent_item_price">$ 1. 234 981</div>
-                    </div>
-                    <div class="recent_item_footer d-flex flex-row align-items-center justify-content-start">
-                      <div><div class="recent_icon"><img src="<?php echo base_url(); ?>../asstes/images/icon_1.png" alt=""></div><span>650 Ftsq</span></div>
-                      <div><div class="recent_icon"><img src="<?php echo base_url(); ?>../asstes/images/icon_2.png" alt=""></div><span>3 Bedrooms</span></div>
-                      <div><div class="recent_icon"><img src="<?php echo base_url(); ?>../asstes/images/icon_3.png" alt=""></div><span>3 Bathrooms</span></div>
+              <?php
+              $auto = 0;
+              foreach ($autos as $key => $value) {
+                if($auto != $value->Car_id ){
+                  ?>
+                  <div class="owl-item">
+                    <div class="recent_item">
+                      <div class="recent_item_inner">
+                        <div class="recent_item_image">
+                            <img src="data: <?php echo $value->Gallery_type ?> ;<?php echo 'base64'; ?>,<?php echo base64_encode( $value->Gallery_image ) ?>" clas="preview_producto" style="width:400px" />
+                          
+                          <div class="tag_featured property_tag"><a href="#">Detalle</a></div>
+                        </div>
+                        <div class="recent_item_body text-center">
+                          <div class="recent_item_location"><?php echo $value->Car_year.' / '.$value->Car_color; ?></div>
+                          <div class="recent_item_title"><a href="property.html"><?php echo $value->Brand_name .' '.$value->Brand_Line_name ?></a></div>
+                          <div class="recent_item_price">$ <?php echo $value->Car_price_sale; ?></div>
+                        </div>
+                        <div class="recent_item_footer d-flex flex-row align-items-center justify-content-start">
+                          <div><div class="recent_icon"><i class="fa fa-check"></i></div><span>Negociable </span> | </div>
+                          <div><div class="recent_icon"><i class="fa fa-check"></i></div><span>Venta | </span></div>
+                          <div><div class="recent_icon"><i class="fa fa-check"></i></div><span>Alquiler |</span></div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
 
-              <!-- Slide -->
-              <div class="owl-item">
-                <div class="recent_item">
-                  <div class="recent_item_inner">
-                    <div class="recent_item_image">
-                      <img src="<?php echo base_url(); ?>../asstes/images/property_2.jpg" alt="">
-                      <div class="tag_offer property_tag"><a href="#">Offer</a></div>
-                    </div>
-                    <div class="recent_item_body text-center">
-                      <div class="recent_item_location">Los Angeles</div>
-                      <div class="recent_item_title"><a href="property.html">2 Floor Town House</a></div>
-                      <div class="recent_item_price">$ 1. 234 981</div>
-                    </div>
-                    <div class="recent_item_footer d-flex flex-row align-items-center justify-content-start">
-                      <div><div class="recent_icon"><img src="<?php echo base_url(); ?>../asstes/images/icon_1.png" alt=""></div><span>650 Ftsq</span></div>
-                      <div><div class="recent_icon"><img src="<?php echo base_url(); ?>../asstes/images/icon_2.png" alt=""></div><span>3 Bedrooms</span></div>
-                      <div><div class="recent_icon"><img src="<?php echo base_url(); ?>../asstes/images/icon_3.png" alt=""></div><span>3 Bathrooms</span></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                  <?php
+                  $auto = $value->Car_id;
+                }
+              }
+              ?>
+              
 
-              <!-- Slide -->
-              <div class="owl-item">
-                <div class="recent_item">
-                  <div class="recent_item_inner">
-                    <div class="recent_item_image">
-                      <img src="<?php echo base_url(); ?>../asstes/images/property_3.jpg" alt="">
-                      <div class="tag_featured property_tag"><a href="#">Featured</a></div>
-                    </div>
-                    <div class="recent_item_body text-center">
-                      <div class="recent_item_location">Florida</div>
-                      <div class="recent_item_title"><a href="property.html">Vacation Home</a></div>
-                      <div class="recent_item_price">$ 1. 234 981</div>
-                    </div>
-                    <div class="recent_item_footer d-flex flex-row align-items-center justify-content-start">
-                      <div><div class="recent_icon"><img src="<?php echo base_url(); ?>../asstes/images/icon_1.png" alt=""></div><span>650 Ftsq</span></div>
-                      <div><div class="recent_icon"><img src="<?php echo base_url(); ?>../asstes/images/icon_2.png" alt=""></div><span>3 Bedrooms</span></div>
-                      <div><div class="recent_icon"><img src="<?php echo base_url(); ?>../asstes/images/icon_3.png" alt=""></div><span>3 Bathrooms</span></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
             </div>
 
@@ -306,7 +337,7 @@
               <div class="recent_slider_nav recent_slider_next"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
             </div>
           </div>
-          <div class="button recent_button"><a href="#">see more</a></div>
+          
         </div>
       </div>
     </div>
@@ -318,8 +349,8 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <div class="section_title">Find properties in these cities</div>
-          <div class="section_subtitle">Search your dream home</div>
+          <div class="section_title">Autos En Alquiler</div>
+          <div class="section_subtitle"> </div>
         </div>
       </div>
     </div>
@@ -327,167 +358,51 @@
     <div class="cities_container d-flex flex-row flex-wrap align-items-start justify-content-between">
 
       <!-- City -->
-      <div class="city">
-        <img src="<?php echo base_url(); ?>../asstes/images/city_1.jpg" alt="https://unsplash.com/@dnevozhai">
-        <div class="city_overlay">
-          <a href="#" class="d-flex flex-column align-items-center justify-content-center">
-            <div class="city_title">Ibiza Town</div>
-            <div class="city_subtitle">Rentals from $450/month</div>
-          </a>  
-        </div>
-      </div>
 
-      <!-- City -->
-      <div class="city">
-        <img src="<?php echo base_url(); ?>../asstes/images/city_2.jpg" alt="https://unsplash.com/@lachlanjdempsey">
-        <div class="city_overlay">
-          <a href="#" class="d-flex flex-column align-items-center justify-content-center">
-            <div class="city_title">Ibiza Town</div>
-            <div class="city_subtitle">Rentals from $450/month</div>
-          </a>  
-        </div>
-      </div>
+      <?php
+      foreach ($alquiler as $key => $value) {
+          ?>
 
-      <!-- City -->
-      <div class="city">
-        <img src="<?php echo base_url(); ?>../asstes/images/city_3.jpg" alt="https://unsplash.com/@hellolightbulb">
-        <div class="city_overlay">
-          <a href="#" class="d-flex flex-column align-items-center justify-content-center">
-            <div class="city_title">Ibiza Town</div>
-            <div class="city_subtitle">Rentals from $450/month</div>
-          </a>  
-        </div>
-      </div>
+          <div class="city">
+            <img src="data: <?php echo $value->Gallery_type ?> ;<?php echo 'base64'; ?>,<?php echo base64_encode( $value->Gallery_image ) ?>" clas="preview_producto" style="width:400px" />
+            
+            <div class="city_overlay">
+              <a href="#" class="d-flex flex-column align-items-center justify-content-center">
+                <div class="city_title"><?php echo $value->Brand_name .' '.$value->Brand_Line_name ?></div>
+                <div class="city_subtitle"><?php echo $value->Car_year.' / '.$value->Car_color; ?></div>
+              </a>  
+            </div>
+            <div class="recent_item_footer d-flex flex-row align-items-center justify-content-start">
+                <div>
+                    <div class="recent_icon">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <span>$  <?php echo $value->Car_price_rental ?> Por Dia</span> 
+                </div>  
+                <div><div class="recent_icon"></div><span>
+                    <div class="tag_featured property_tag" id="<?php echo $value->Car_id; ?>" style="top: -5px;"><span class="btn btn-default">Detalle</span></div>  
+                </span></div>
+                         
+            </div>
 
-      <!-- City -->
-      <div class="city">
-        <img src="<?php echo base_url(); ?>../asstes/images/city_4.jpg" alt="https://unsplash.com/@justinbissonbeck">
-        <div class="city_overlay">
-          <a href="#" class="d-flex flex-column align-items-center justify-content-center">
-            <div class="city_title">Ibiza Town</div>
-            <div class="city_subtitle">Rentals from $450/month</div>
-          </a>  
-        </div>
-      </div>
+          </div>
 
-      <!-- City -->
-      <div class="city">
-        <img src="<?php echo base_url(); ?>../asstes/images/city_5.jpg" alt="https://unsplash.com/@claudiotrigueros">
-        <div class="city_overlay">
-          <a href="#" class="d-flex flex-column align-items-center justify-content-center">
-            <div class="city_title">Ibiza Town</div>
-            <div class="city_subtitle">Rentals from $450/month</div>
-          </a>  
-        </div>
-      </div>
+          <?php
+      }
+      ?>
+      
 
-      <!-- City -->
-      <div class="city">
-        <img src="<?php echo base_url(); ?>../asstes/images/city_6.jpg" alt="https://unsplash.com/@andersjilden">
-        <div class="city_overlay">
-          <a href="#" class="d-flex flex-column align-items-center justify-content-center">
-            <div class="city_title">Ibiza Town</div>
-            <div class="city_subtitle">Rentals from $450/month</div>
-          </a>  
-        </div>
-      </div>
 
-      <!-- City -->
-      <div class="city">
-        <img src="<?php echo base_url(); ?>../asstes/images/city_7.jpg" alt="https://unsplash.com/@sawyerbengtson">
-        <div class="city_overlay">
-          <a href="#" class="d-flex flex-column align-items-center justify-content-center">
-            <div class="city_title">Ibiza Town</div>
-            <div class="city_subtitle">Rentals from $450/month</div>
-          </a>  
-        </div>
-      </div>
 
-      <!-- City -->
-      <div class="city">
-        <img src="<?php echo base_url(); ?>../asstes/images/city_8.jpg" alt="https://unsplash.com/@mathewwaters">
-        <div class="city_overlay">
-          <a href="#" class="d-flex flex-column align-items-center justify-content-center">
-            <div class="city_title">Ibiza Town</div>
-            <div class="city_subtitle">Rentals from $450/month</div>
-          </a>  
-        </div>
-      </div>
     </div>
   </div>
 
   <!-- Testimonials -->
 
-  <div class="testimonials">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="section_title">What our clients say</div>
-          <div class="section_subtitle">Search your dream home</div>
-        </div>
-      </div>
-      <div class="row testimonials_row">
-        
-        <!-- Testimonial Item -->
-        <div class="col-lg-4 testimonial_col">
-          <div class="testimonial">
-            <div class="testimonial_title">Amazing home for me</div>
-            <div class="testimonial_text">Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul.</div>
-            <div class="testimonial_author_image"><img src="<?php echo base_url(); ?>../asstes/images/testimonial_1.jpg" alt=""></div>
-            <div class="testimonial_author"><a href="#">Diane Smith</a><span>, Client</span></div>
-            <div class="rating_r rating_r_5 testimonial_rating"><i></i><i></i><i></i><i></i><i></i></div>
-          </div>
-        </div>
-
-        <!-- Testimonial Item -->
-        <div class="col-lg-4 testimonial_col">
-          <div class="testimonial">
-            <div class="testimonial_title">Friendly Realtors</div>
-            <div class="testimonial_text">Nec odio vestibulum est mattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul. Etiam nec odio vestibulum est mat tis effic iturut magna. Pellentesque sit amet tellus blandit.</div>
-            <div class="testimonial_author_image"><img src="<?php echo base_url(); ?>../asstes/images/testimonial_2.jpg" alt=""></div>
-            <div class="testimonial_author"><a href="#">Michael Duncan</a><span>, Client</span></div>
-            <div class="rating_r rating_r_5 testimonial_rating"><i></i><i></i><i></i><i></i><i></i></div>
-          </div>
-        </div>
-
-        <!-- Testimonial Item -->
-        <div class="col-lg-4 testimonial_col">
-          <div class="testimonial">
-            <div class="testimonial_title">Very good communication</div>
-            <div class="testimonial_text">Retiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul.</div>
-            <div class="testimonial_author_image"><img src="<?php echo base_url(); ?>../asstes/images/testimonial_3.jpg" alt=""></div>
-            <div class="testimonial_author"><a href="#">Shawn Gaines</a><span>, Client</span></div>
-            <div class="rating_r rating_r_5 testimonial_rating"><i></i><i></i><i></i><i></i><i></i></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
 
   <!-- Newsletter -->
 
-  <div class="newsletter">
-    <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="<?php echo base_url(); ?>../asstes/images/newsletter.jpg" data-speed="0.8"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="newsletter_content d-flex flex-lg-row flex-column align-items-start justify-content-start">
-            <div class="newsletter_title_container">
-              <div class="newsletter_title">Are you buying or selling?</div>
-              <div class="newsletter_subtitle">Search your dream home</div>
-            </div>
-            <div class="newsletter_form_container">
-              <form action="#" class="newsletter_form">
-                <input type="email" class="newsletter_input" placeholder="Your e-mail address" required="required">
-                <button class="newsletter_button">subscribe now</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+ 
 
   <!-- Footer -->
 
@@ -567,6 +482,29 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     </div>
   </footer>
 </div>
+
+<!-- Modal Large-->
+   <div id="detalle" tabindex="-1" role="dialog" aria-labelledby="producto_asociado_modal"  class="modal fade">
+      <div class="modal-dialog modal-lg">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+               <h4 id="myModalLabelLarge" class="modal-title">Auto Detalle</h4>
+            </div>
+            <div class="modal-body">
+                <p class="auto_detalle"></p>                                 
+               
+            </div>
+            <div class="modal-footer">
+               <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>               
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- Modal Small-->
+
 
 <script src="<?php echo base_url(); ?>../asstes/js/jquery-3.2.1.min.js"></script>
 <script src="<?php echo base_url(); ?>../asstes/styles/bootstrap4/popper.js"></script>

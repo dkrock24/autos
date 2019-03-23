@@ -70,19 +70,11 @@ class Accesorio extends CI_Controller {
 		$str_links = $this->pagination->create_links();
 		$data["links"] = explode('&nbsp;',$str_links );
 
-		// paginacion End
-
-
-		// GET PAIS
-		$id_rol = $this->session->userdata['usuario'][0]->id_rol;
+		// paginacion End		
 
 		// Seguridad :: Validar URL usuario	
 		$menu_session = $this->session->menu;	
 		//parametros($menu_session);
-
-		$id_rol = $this->session->roles[0];
-		$vista_id = 20; // Vista Orden Lista
-		$id_usuario 	= $this->session->usuario[0]->id_usuario;
 
 		$data['menu'] = $this->session->menu;
 		$data['contador_tabla'] = $contador_tabla;
@@ -96,40 +88,34 @@ class Accesorio extends CI_Controller {
 	}
 	
 	public function nuevo(){
-		// NUEVO PAIS
-		$id_rol = $this->session->userdata['usuario'][0]->id_rol;
-
+		
 		$data['menu'] = $this->session->menu;
-		$data['moneda'] = $this->Pais_model->get_moneda();
-		$data['home'] = 'admin/pais/pais_nuevo';
+		$data['home'] = 'admin/pais/a_nuevo';
 
-		$this->parser->parse('template', $data);
+		$this->parser->parse('template2', $data);
 	}
 
 	public function crear(){
-		// Insert pais
-		$this->Pais_model->crear_pais( $_POST );
+		
+		$this->Accesorio_model->crear( $_POST );
 
-		redirect(base_url()."admin/pais/index");
+		redirect(base_url()."admin/accesorio/index");
 	}
 
-	public function edit( $id_pais ){
-		// EDITAR PAIS
-		$id_rol = $this->session->userdata['usuario'][0]->id_rol;
+	public function editar( $accesorio ){
 
 		$data['menu'] = $this->session->menu;
-		$data['pais'] = $this->Pais_model->edit_pais( $id_pais );
-		$data['moneda'] = $this->Pais_model->get_moneda();
-		$data['home'] = 'admin/pais/pais_edit';
+		$data['accesorio'] = $this->Accesorio_model->editar( $accesorio );
+		$data['home'] = 'admin/pais/a_edit';
 
-		$this->parser->parse('template', $data);
+		$this->parser->parse('template2', $data);
 	}
 	
 	public function update( ){
 		// UPDATE PAIS //
-		$data['pais'] = $this->Pais_model->update_pais( $_POST );
+		$data['pais'] = $this->Accesorio_model->update( $_POST );
 		
-		redirect(base_url()."admin/pais/index");
+		redirect(base_url()."admin/accesorio/index");
 	}
 	
 	public function delete( $id_pais ){

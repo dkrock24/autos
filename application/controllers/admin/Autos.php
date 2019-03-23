@@ -157,7 +157,51 @@ class Autos extends CI_Controller {
 		//redirect(base_url()."admin/autos/accesorio");
 	}
 
+	// Interno
+	public function car_accesorio1($id_car){
+
+		$data['accesorios'] = $this->Accesorio_model->getCarAccesorios($id_car);
+		$data['allAccesorios'] = $this->Accesorio_model->getAllAccesorios();
+		$data['car'] = $id_car;
+
+		$data['menu'] = $this->session->menu;
+		$data['home'] = 'admin/autos/accesorios_edit';
+
+		$this->parser->parse('template2', $data);
+	}
+
+	public function save_accesorios1(){
+
+		if(isset($_POST)){
+			$data = $this->Autos_model->save_accesorios( $_POST  );
+			redirect(base_url()."admin/autos/index");
+		}
+	}
+
+	public function car_funciones1($id_car){
+
+		$data['Allfunciones'] = $this->Functiones_model->getAllFunciones();
+		$data['carFunciones'] = $this->Functiones_model->getFuncionesId( $id_car );
+		$data['car'] = $id_car;
+
+		$data['menu'] = $this->session->menu;
+		$data['home'] = 'admin/autos/funciones_edit';
+
+		$this->parser->parse('template2', $data);
+		//redirect(base_url()."admin/autos/accesorio");
+	}
+
+	// Interno End
+
 	public function save_funciones(){
+
+		if(isset($_POST)){
+			$data = $this->Autos_model->save_funciones( $_POST  );
+			redirect(base_url()."admin/autos/index");
+		}
+	}
+
+	public function save_funciones1(){
 
 		if(isset($_POST)){
 			$data = $this->Autos_model->save_funciones( $_POST  );
@@ -173,6 +217,7 @@ class Autos extends CI_Controller {
 		$data['auto'] = $this->Autos_model->getOneAuto($id);
 		$data['funciones'] = $this->Autos_model->getFunciones($id);
 		$data['accesorios'] = $this->Autos_model->getAccesorios($id);
+		
 
 		$data['menu'] = $this->session->menu;
 		$data['home'] = 'admin/autos/ver';
@@ -188,26 +233,26 @@ class Autos extends CI_Controller {
 
 	
 
-	public function editar( $moneda_id ){
+	public function editar( $auto_id ){
 
 		// Seguridad :: Validar URL usuario	
 		$menu_session = $this->session->menu;	
 		parametros($menu_session);
 
-		$id_rol = $this->session->roles[0];
-		$vista_id = 8; // Vista Orden Lista
-
 		$data['menu'] = $this->session->menu;
-		$data['monedas'] = $this->Moneda_model->getMonedaId($moneda_id);
-		$data['acciones'] = $this->Accion_model->get_vistas_acciones( $vista_id , $id_rol );
-		$data['home'] = 'admin/moneda/moneda_editar';
 
-		$this->parser->parse('template', $data);
+		$data['auto'] = $this->Autos_model->getOneAuto($auto_id);
+		$data['funciones'] = $this->Autos_model->getFunciones($auto_id);
+		$data['accesorios'] = $this->Autos_model->getAccesorios($auto_id);
+		$data['brand'] = $this->Autos_model->getBrandLines();
+		$data['home'] = 'admin/autos/a_editar';
+
+		$this->parser->parse('template2', $data);
 	}
 
 	public function update(){
 		if(isset($_POST)){
-			$data = $this->Moneda_model->update( $_POST );
+			$data = $this->Autos_model->update( $_POST );
 
 			if($data){
 				$this->session->set_flashdata('warning', "Moneda Fue Actualizado");
@@ -216,7 +261,7 @@ class Autos extends CI_Controller {
 			}
 		}
 
-		redirect(base_url()."admin/moneda/index");
+		redirect(base_url()."admin/autos/index");
 	}
 
 	public function column(){
@@ -237,5 +282,30 @@ class Autos extends CI_Controller {
 		$fields['titulo'] = "Autos Lista";
 
 		return $fields;
+	}
+
+	// Galeria
+
+	public function galeria( $car_id ){
+		$data['menu'] = $this->session->menu;
+		$data['car_id'] = $car_id;
+		$data['fotos'] = $this->Autos_model->get_fotos( $car_id );
+
+		$data['home'] = 'admin/autos/galeria';
+
+		$this->parser->parse('template2', $data);
+	}
+
+	public function fotografia_save(){
+		if(file_get_contents($_FILES['foto']['tmp_name'])){
+			$this->Autos_model->fotografia_save($_POST);
+		}
+
+		redirect(base_url()."admin/autos/galeria/". $_POST['car_id']);
+	}
+
+	public function delete_galeria($id, $car){
+		$this->Autos_model->delete_galeria($id);
+		redirect(base_url()."admin/autos/galeria/". $car);
 	}
 }

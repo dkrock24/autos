@@ -8,7 +8,7 @@
             var marca = $(this).val();
 
             $.ajax({
-                url: "getModelo/"+marca,
+                url: "../getModelo/"+marca,
                 datatype: 'json',      
                 cache : false,                
 
@@ -64,10 +64,10 @@
     <!-- Page content-->
     <div class="content-wrapper">  
         <h3 style="height: 50px; font-size: 13px;">  
-            <a href="index" style="top: -12px;position: relative; text-decoration: none">
+            <a href="../index" style="top: -12px;position: relative; text-decoration: none">
                 <button type="button" class="mb-sm btn btn-pill-left btn-primary btn-outline"> Autos</button> 
             </a> 
-            <button type="button" style="top: -12px; position: relative;" class="mb-sm btn btn-info"> Nuevo</button>
+            <button type="button" style="top: -12px; position: relative;" class="mb-sm btn btn-info"> Editar</button>
             
         </h3>
         <div class="row">
@@ -78,11 +78,11 @@
 
                         <div id="panelDemo10" class="panel panel-info">    
                                                 
-                            <div class="panel-heading">Nuevo Auto : <?php //echo $onMenu[0]->nombre_submenu ?> </div>
+                            <div class="panel-heading">Editar Auto : <?php //echo $auto[0]->nombre_submenu ?> </div>
                              <div class="panel-body">        
                             <p> 
-                            <form class="form-horizontal" name="moneda" action='save' method="post">
-                                <input type="hidden" value="<?php //echo $onMenu[0]->id_submenu; ?>" name="id_submenu">
+                            <form class="form-horizontal" name="auto" action='../update' method="post">
+                                <input type="hidden" value="<?php echo $auto[0]->Car_id; ?>" name="Car_id">
                                 <div class="row">
 
 
@@ -94,9 +94,18 @@
                                                <select id="marca" name="marca" class="form-control">
                                                     <?php
                                                     foreach ($brand as $key => $value) {
+                                                        if($value->Brand_Line_id == $auto[0]->Brand_Line_id ){
                                                         ?>
                                                         <option value="<?php echo $value->Brand_id; ?>"><?php echo $value->Brand_name; ?></option>
                                                         <?php
+                                                        }
+                                                    }
+                                                    foreach ($brand as $key => $value) {
+                                                        if($value->Brand_Line_id != $auto[0]->Brand_Line_id ){
+                                                        ?>
+                                                        <option value="<?php echo $value->Brand_id; ?>"><?php echo $value->Brand_name; ?></option>
+                                                        <?php
+                                                        }
                                                     }
                                                     ?>
                                                 </select>
@@ -108,6 +117,15 @@
                                             <label for="inputPassword3" class="col-sm-3 control-label no-padding-right">Modelo</label>
                                             <div class="col-sm-9">
                                                 <select id="modelo" name="Brand_Line_id" class="form-control">
+                                                    <?php
+                                                    foreach ($brand as $key => $value) {
+                                                        if($value->Brand_Line_id == $auto[0]->Brand_Line_id ){
+                                                        ?>
+                                                        <option value="<?php echo $value->Brand_Line_id; ?>"><?php echo $value->Brand_Line_name; ?></option>
+                                                        <?php
+                                                        }
+                                                    }
+                                                    ?>
                                                     
                                                 </select>
                                                 
@@ -117,7 +135,7 @@
                                         <div class="form-group">
                                             <label for="inputPassword3" class="col-sm-3 control-label no-padding-right">Precio Venta</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="Car_price_sale" name="Car_price_sale" placeholder="" value="<?php //echo $onMenu[0]->url_submenu ?>">
+                                                <input type="text" class="form-control" id="Car_price_sale" name="Car_price_sale" placeholder="" value="<?php echo $auto[0]->Car_price_sale ?>">
                                                 
                                             </div>
                                         </div>
@@ -125,7 +143,7 @@
                                         <div class="form-group">
                                             <label for="inputPassword3" class="col-sm-3 control-label no-padding-right">Precio Renta</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="Car_price_rental" name="Car_price_rental" placeholder="" value="<?php //echo $onMenu[0]->url_submenu ?>">
+                                                <input type="text" class="form-control" id="Car_price_rental" name="Car_price_rental" placeholder="" value="<?php echo $auto[0]->Car_price_rental ?>">
                                                 
                                             </div>
                                         </div>
@@ -134,19 +152,43 @@
                                             <label for="inputPassword3" class="col-sm-3 control-label no-padding-right">Negociable</label>
                                             <div class="col-sm-9">
                                                 <select name="Car_negociable" class="form-control">
-                                                    <option value="1">Si</option>
-                                                    <option value="0">No</option>
+                                                     <?php
+                                                        if( $auto[0]->Car_negociable ==1 ){ 
+                                                            ?>
+                                                                <option value="1">Si</option>
+                                                                <option value="0">No</option>
+                                                                <?php
+                                                            } else{
+                                                                 ?>
+                                                                <option value="0">No</option>
+                                                                <option value="1">Si</option>
+                                                                <?php
+                                                            }
+                                                        ?>
+        
                                                 </select>
                                                 
                                             </div>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="inputPassword3" class="col-sm-3 control-label no-padding-right">Para Venta</label>
+                                            <label for="inputPassword3" class="col-sm-3 control-label no-padding-right">Vendido</label>
                                             <div class="col-sm-9">
                                                 <select name="Car_sale" class="form-control">
-                                                    <option value="0">No</option>
-                                                    <option value="1">Si</option>
+      
+                                                    <?php
+                                                    if( $auto[0]->Car_sale ==1 ){ 
+                                                            ?>
+                                                                <option value="1">Si</option>
+                                                                <option value="0">No</option>
+                                                                <?php
+                                                            } else{
+                                                                 ?>
+                                                                <option value="0">No</option>
+                                                                <option value="1">Si</option>
+                                                                <?php
+                                                            }
+                                                        ?>
                                                 </select>
                                                 
                                             </div>
@@ -156,8 +198,20 @@
                                             <label for="inputPassword3" class="col-sm-3 control-label no-padding-right">Para Renta</label>
                                             <div class="col-sm-9">
                                                 <select name="Car_rental" class="form-control">
-                                                    <option value="0">No</option>
-                                                    <option value="1">Si</option>   
+                                                    
+                                                     <?php
+                                                    if( $auto[0]->Car_rental ==1 ){ 
+                                                            ?>
+                                                                <option value="1">Si</option>
+                                                                <option value="0">No</option>
+                                                                <?php
+                                                            } else{
+                                                                 ?>
+                                                                <option value="0">No</option>
+                                                                <option value="1">Si</option>
+                                                                <?php
+                                                            }
+                                                        ?>
                                                 </select>
                                                 
                                             </div>
@@ -166,7 +220,7 @@
                                         <div class="form-group">
                                             <label for="inputPassword3" class="col-sm-3 control-label no-padding-right">Año</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="Car_year" name="Car_year" placeholder="" value="<?php //echo $onMenu[0]->url_submenu ?>">
+                                                <input type="text" class="form-control" id="Car_year" name="Car_year" placeholder="" value="<?php echo $auto[0]->Car_year ?>">
                                                 
                                             </div>
                                         </div>
@@ -174,7 +228,7 @@
                                         <div class="form-group">
                                             <label for="inputPassword3" class="col-sm-3 control-label no-padding-right">Color</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="Car_color" name="Car_color" placeholder="" value="<?php //echo $onMenu[0]->url_submenu ?>">
+                                                <input type="text" class="form-control" id="Car_color" name="Car_color" placeholder="" value="<?php echo $auto[0]->Car_color ?>">
                                                 
                                             </div>
                                         </div>
@@ -182,7 +236,7 @@
                                        <div class="form-group">
                                             <label for="inputPassword3" class="col-sm-3 control-label no-padding-right">Descripcion</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="Car_description" name="Car_description" placeholder="" value="<?php //echo $onMenu[0]->url_submenu ?>">
+                                                <input type="text" class="form-control" id="Car_description" name="Car_description" placeholder="" value="<?php echo $auto[0]->Car_description ?>">
                                                 
                                             </div>
                                         </div>
@@ -194,8 +248,19 @@
                                                 
                                                 <label>
                                                     <select name="Car_status" class="form-control">
-                                                        <option value="1">Activo</option>
-                                                        <option value="0">Inactivo</option>
+                                                         <?php
+                                                        if( $auto[0]->Car_status ==1 ){ 
+                                                            ?>
+                                                                <option value="1">Activo</option>
+                                                                <option value="0">Inactivo</option>
+                                                                <?php
+                                                            } else{
+                                                                 ?>
+                                                                <option value="0">Inactivo</option>
+                                                                <option value="1">Activo</option>
+                                                                <?php
+                                                            }
+                                                        ?>
                                                     </select>
                                                 </label>
                                             </div>
@@ -204,7 +269,11 @@
                                         <div class="form-group">
                                             <div class="col-sm-offset-3 col-sm-9">
                                                 <button type="submit" class="btn btn-primary">Guardar</button>
+                                                <a href="../car_accesorio1/<?php echo $auto[0]->Car_id ?>" class="btn btn-warning">Accesorios</a>
+                                                <a href="../car_funciones1/<?php echo $auto[0]->Car_id ?>" class="btn btn-danger">Caracteristicas</a>
+                                                <a href="../galeria/<?php echo $auto[0]->Car_id ?>" class="btn btn-success">Galeria</a>
                                             </div>
+
                                         </div>
 
 

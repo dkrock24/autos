@@ -5,12 +5,16 @@ class Persona_model extends CI_Model {
     const sys_ciudad = 'sys_ciudad';
     const car = 'car';
     const carrental = 'carrental';
+     const brand = 'brand';
+    const brand_line = 'brand_line';
 	
 	function getPersona( $limit, $id ){
 
 		$this->db->select('*');
         $this->db->from(self::carrental.' as r');
         $this->db->join(self::car.' as c', 'on r.Car_id = c.Car_id');
+        $this->db->join(self::brand_line.' as bl', 'on bl.Brand_Line_id = c.Brand_Line_id');
+        $this->db->join(self::brand.' as b', 'on b.Brand_id = bl.Brand_id');
         $this->db->limit($limit, $id);
         $query = $this->db->get();
         //echo $this->db->queries[1];
@@ -76,14 +80,14 @@ class Persona_model extends CI_Model {
         $this->db->update(self::sys_persona, $data);  
 	}
 
-    function getPersonaId( $persona_id ){
+    function getAutoRentadoId( $id_rentado ){
 
         $this->db->select('*');
-        $this->db->from(self::sys_persona.' as p');
-        $this->db->join(self::sys_ciudad.' as c', 'on p.Ciudad = c.id_ciudad');
-        $this->db->join(self::sys_departamento.' as d', 'on d.id_departamento = c.departamento');
-        $this->db->join(self::sys_sexo.' as s', 'on p.Sexo = s.id_sexo');
-        $this->db->where('p.id_persona', $persona_id );
+        $this->db->from(self::carrental.' as r');
+        $this->db->join(self::car.' as c', 'on r.Car_id = c.Car_id');
+        $this->db->join(self::brand_line.' as bl', 'on bl.Brand_Line_id = c.Brand_Line_id');
+        $this->db->join(self::brand.' as b', 'on b.Brand_id = bl.Brand_id');
+        $this->db->where('r.Car_rental_id', $id_rentado);
         $query = $this->db->get();
         //echo $this->db->queries[1];
         

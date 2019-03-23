@@ -8,10 +8,11 @@ class Linea_model extends CI_Model {
 
 		$this->db->select('*');
         $this->db->from(self::brand.' as b');
-        $this->db->from(self::brand_line.' l ', ' on b.Brand_id = l.Brand_id'); 
+        $this->db->join(self::brand_line.' l ', ' on b.Brand_id = l.Brand_id', 'right'); 
+        $this->db->order_by('b.Brand_id'); 
         $this->db->limit($limit, $id);
         $query = $this->db->get(); 
-        //echo $this->db->queries[1];
+        //echo $this->db->queries[2];
         
         if($query->num_rows() > 0 )
         {
@@ -49,21 +50,44 @@ class Linea_model extends CI_Model {
         } 
     }
 
-	function crear_atributo( $atributos){
+	function save( $modelos){
 
         
 		$data = array(
-            'nam_atributo' => $atributos['nam_atributo'],
-            'tipo_atributo' => $atributos['tipo_atributo'],
-            'estado_atributo' => $atributos['estado_atributo'],
-            'creado_atributo' => date("Y-m-d h:i:s")
+            'Brand_Line_name' => $modelos['Brand_Line_name'],
+            'Brand_Line_description' => $modelos['Brand_Line_description'],
+            'Brand_Line_status' => $modelos['Brand_Line_status'],
+            'Brand_id' => $modelos['Brand_id'],
         );
 		$this->db->insert(self::brand_line, $data ); 
-        $ultimo_id = $this->db->insert_id();
-
-        $this->guardar_atributos_opciones( $ultimo_id , $atributos );
-
 	}
+
+    function editar($modelo ){
+
+        $this->db->select('*');
+        $this->db->from(self::brand_line);
+        $this->db->where('Brand_Line_id', $modelo);
+        $query = $this->db->get(); 
+        //echo $this->db->queries[1];
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        } 
+    }
+
+    function update( $modelo){
+
+        $data = array(
+            'Brand_Line_name' => $modelo['Brand_Line_name'],
+            'Brand_Line_description' => $modelo['Brand_Line_description'],
+            'Brand_Line_status' => $modelo['Brand_Line_status'],
+            'Brand_id' => $modelo['Brand_id'],
+        );
+        $this->db->where('Brand_Line_id', $modelo['Brand_Line_id'] ); 
+        $this->db->update(self::brand_line, $data ); 
+
+    }
 
     function guardar_atributos_opciones( $ultimo_id , $atributos ){
         // esta funcion guarda las opcciones de los tipos de atributos de multiples opciones

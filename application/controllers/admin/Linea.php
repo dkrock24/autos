@@ -33,6 +33,7 @@ class Linea extends CI_Controller {
 		$this->load->model('admin/Linea_model');  
 		$this->load->model('admin/Menu_model');
 		$this->load->model('accion/Accion_model');
+		$this->load->model('admin/Autos_model');
 	}
 
 // Start PAIS **********************************************************************************
@@ -71,14 +72,6 @@ class Linea extends CI_Controller {
 
 		// paginacion End
 
-
-		// GET PAIS
-		$id_rol = $this->session->userdata['usuario'][0]->id_rol;
-
-		$id_rol = $this->session->roles[0];
-		$vista_id = 20; // Vista Orden Lista
-		$id_usuario 	= $this->session->usuario[0]->id_usuario;
-
 		$data['menu'] = $this->session->menu;
 		$data['contador_tabla'] = $contador_tabla;
 		
@@ -91,30 +84,36 @@ class Linea extends CI_Controller {
 	}
 
 	public function nuevo(){
-		// GET PAIS
-		$id_rol = $this->session->userdata['usuario'][0]->id_rol;
+			
+		$data['home'] = 'producto/linea/l_nuevo';
+		$data['brand'] = $this->Autos_model->getBrand();
+		$data['menu'] = $this->session->menu;
 
-		$data['menu'] = $this->session->menu;		
-		$data['home'] = 'admin/atributos/atributos_nuevo';
-
-		$this->parser->parse('template', $data);
+		$this->parser->parse('template2', $data);
 	}
 
-	public function crear(){
+	public function save(){
 		// Insert pais
-		$this->Atributos_model->crear_atributo( $_POST );
+		$this->Linea_model->save( $_POST );
 
-		redirect(base_url()."admin/atributos/index");
+		redirect(base_url()."admin/linea/index");
 	}
 
-	public function edit( $id_prod_atributo ){
-		$id_rol = $this->session->userdata['usuario'][0]->id_rol;
-
+	public function editar( $modelo ){
+		
 		$data['menu'] = $this->session->menu;		
-		$data['atributo'] = $this->Atributos_model->get_atributo_id( $id_prod_atributo );
-		$data['home'] = 'admin/atributos/atributos_editar';
+		$data['modelo'] = $this->Linea_model->editar( $modelo );
+		$data['brand'] = $this->Autos_model->getBrand();
+		$data['home'] = 'producto/linea/l_editar';
 
-		$this->parser->parse('template', $data);
+		$this->parser->parse('template2', $data);
+	}
+
+	public function update( ){
+		
+		$this->Linea_model->update( $_POST );
+		
+		redirect(base_url()."admin/linea/index");
 	}
 
 	public function actualizar(){

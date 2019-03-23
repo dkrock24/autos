@@ -111,54 +111,58 @@ class Persona extends CI_Controller {
 		redirect(base_url()."admin/persona/index");
 	}
 
-	public function editar( $persona_id ){
+	public function editar( $auto_rentado_id ){
 		// Seguridad :: Validar URL usuario	
 		$menu_session = $this->session->menu;	
 		parametros($menu_session);
 
-		//$id_rol = $this->session->roles[0];
-		//$vista_id = 8; // Vista Orden Lista
-		//$data['acciones'] = $this->Accion_model->get_vistas_acciones( $vista_id , $id_rol );
-
 		$data['menu'] 	= $this->session->menu;		
-		$data['persona']= $this->Persona_model->getPersonaId( $persona_id );
-		$data['sexo'] 	= $this->Sexo_model->getSexo();
-		$data['ciudad'] = $this->Ciudad_model->getCiudad();
-		$data['ciudad2'] = $this->Ciudad_model->getCiudadId( $data['persona'][0]->id_departamento );
+		$data['rentado']= $this->Persona_model->getAutoRentadoId( $auto_rentado_id );
+		$data['autos'] = $this->Autos_model->getAutoAlquiler();
 
 		$data['home'] 	= 'admin/persona/persona_editar';
 
-		$this->parser->parse('template', $data);
+		$this->parser->parse('template2', $data);
 	}
 
 	public function update(){
 
-		$data['bodegas'] = $this->Persona_model->update( $_POST );
+		$data['bodegas'] = $this->Autos_model->update_alquiler( $_POST );
 
 		redirect(base_url()."admin/persona/index");
 	}
 
-	public function getCiudadId( $departamento_id ){
+	public function ver( $id_rentado ){
+		$menu_session = $this->session->menu;	
+		parametros($menu_session);
 
-		$data['ciudad'] = $this->Ciudad_model->getCiudadId( $departamento_id );
-		echo json_encode($data);
+		$data['menu'] 	= $this->session->menu;		
+		$data['rentado']= $this->Persona_model->getAutoRentadoId( $id_rentado );
+		
+		$data['funciones'] = $this->Autos_model->getFunciones( $data['rentado'][0]->Car_id );
+		$data['accesorios'] = $this->Autos_model->getAccesorios($data['rentado'][0]->Car_id);
+		
+
+		$data['home'] 	= 'admin/persona/ver';
+
+		$this->parser->parse('template2', $data);
 	}
 
 		public function column(){
 
 		$column = array(
-			'#','Auto','Cliente','Edad','DUI','NIT','Licencia','Direccion','Tel','Tel','Incio','Fin','Monto','Deposito','Estado'
+			'#','Marca','Modelo','Cliente','Estado'
 		);
 		return $column;
 	}
 
 	public function fields(){
 		$fields['field'] = array(
-			'Car_id','full_name','age','dui','nit','licence','address','phone1','phone2','date_start','date_end','amount','deposito','estado'
+			'Brand_name','Brand_Line_name','full_name','estado'
 		);
 		
 		$fields['id'] = array('Car_rental_id');
-		$fields['estado'] = array('estado');
+		$fields['estado'] = array('rentado_estado');
 		$fields['titulo'] = "Rentados Lista";
 
 		return $fields;

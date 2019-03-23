@@ -2,9 +2,9 @@
 class Accesorio_model extends CI_Model {
 	
 	const accesorio =  'accesorio';
+    const caraccesorio =  'caraccesorio';
 
-
-
+    
 	function get_pais( $limit, $id  ){
 
 		$this->db->select('*');
@@ -37,36 +37,40 @@ class Accesorio_model extends CI_Model {
 	}
 
 	// UPDATE PAIS //
-	function update_pais( $pais ){
+	function update( $accesorio ){
 
 		$data = array(
-            'nombre_pais' => $pais['nombre_pais'],
-            'zip_code' => $pais['zip_code'],
-            'id_moneda' => $pais['moneda_pais'],
-            'fecha_actualizacion_pais' => date("Y-m-d h:i:s"),
-            'estado_pais' => $pais['estado_pais']
+            'Accesorios_name' => $accesorio['Accesorios_name'],
+            'Accesorios_descripcion' => $accesorio['Accesorios_descripcion'],            
+            'Accesorios_status' => $accesorio['Accesorios_status']
         );
 
-        $this->db->where('id_pais', $pais['id_pais']);
+        $this->db->where('Accesorio_id', $accesorio['Accesorio_id']);
         $this->db->update(self::accesorio, $data);  
 	}
 
-	// Delete Pais
-	function pais_delete( $id_pais ){
-		
-	}
-
-	function crear_pais( $pais ){
+	function crear( $accesorio ){
 
 		$data = array(
-            'nombre_pais' => $pais['nombre_pais'],
-            'zip_code' => $pais['zip_code'],
-            'id_moneda' => $pais['moneda_pais'],
-            'fecha_creacion_pais' => date("Y-m-d h:i:s"),
-            'estado_pais' => $pais['estado_pais']
+            'Accesorios_name' => $accesorio['Accesorios_name'],
+            'Accesorios_descripcion' => $accesorio['Accesorios_descripcion'],            
+            'Accesorios_status' => $accesorio['Accesorios_status']
         );
 		$this->db->insert(self::accesorio, $data ); 
 	}
+
+    function editar( $accesorio ){
+
+        $this->db->select('*');
+        $this->db->from(self::accesorio);
+        $this->db->where('Accesorio_id', $accesorio );
+        $query = $this->db->get(); 
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        } 
+    }
 
 // DEPARTAMENTOS ---------------------------------------------------------------------
 
@@ -123,6 +127,21 @@ class Accesorio_model extends CI_Model {
         $this->db->where('id_depa', $departamento['id_depa']);
 		$this->db->update(self::accesorio, $data ); 
 	}
+
+
+    function getCarAccesorios($id_car){
+        $this->db->select('*');
+        $this->db->from(self::accesorio.' as a');
+        $this->db->join(self::caraccesorio.' as ca', ' on a.Accesorio_id = ca.Accesorio_id','right');
+        $this->db->where('ca.Car_id',$id_car ); 
+
+        $query = $this->db->get(); 
+        
+        if($query->num_rows() > 0 )
+        {
+            return $query->result();
+        }
+    }
 
 // END
 

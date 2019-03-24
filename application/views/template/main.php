@@ -8,17 +8,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/styles/bootstrap4/bootstrap.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/styles/bootstrap4/bootstrap.min.css">
 
-<link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/plugins/main_styOwlCarousel2-2.2.1/animate.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/styles/main_styles.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/styles/responsive.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/plugins/main_styOwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/styles/main_styles.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/styles/responsive.css">
 
-<script src="<?php echo base_url(); ?>../asstes/vendor/jquery/dist/jquery.js"></script>
+<script src="<?php echo base_url(); ?>/asstes/vendor/jquery/dist/jquery.js"></script>
 
 <script type="text/javascript">
 
@@ -116,7 +116,7 @@
         <div class="col">
           <div class="header_content d-flex flex-row align-items-center justify-content-start">
             <div class="logo">
-              <a href="#"><img src="<?php echo base_url(); ?>../asstes/images/logo_pagina.png" alt=""></a>
+              <a href="#"><img src="<?php echo base_url(); ?>/asstes/images/logo_pagina.png" alt=""></a>
             </div>
             <nav class="main_nav">
               <ul>
@@ -126,7 +126,7 @@
             </nav>
             <div class="phone_num ml-auto">
               <div class="phone_num_inner">
-                <img src="<?php echo base_url(); ?>../asstes/images/phone.png" alt=""><span> <?php echo $persona[0]->phone1; ?></span>
+                <img src="<?php echo base_url(); ?>/asstes/images/phone.png" alt=""><span> <?php echo $persona[0]->phone1; ?></span>
               </div>
             </div>
             <div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -144,7 +144,7 @@
       <div class="logo menu_logo">
         <a href="#">
           <div class="logo_container d-flex flex-row align-items-start justify-content-start">
-            <div class="logo_image"><div><img src="<?php echo base_url(); ?>../asstes/images/logo_pagina.png" alt=""></div></div>
+            <div class="logo_image"><div><img src="<?php echo base_url(); ?>/asstes/images/logo_pagina.png" alt=""></div></div>
           </div>
         </a>
       </div>
@@ -166,7 +166,7 @@
         
         <!-- Slide -->
         <div class="owl-item">
-          <div class="home_slider_background" style="background-image:url(<?php echo base_url(); ?>../asstes/images/home_slider_1x.JPEG)"></div>
+          <div class="home_slider_background" style="background-image:url(<?php echo base_url(); ?>/asstes/images/home_slider_1x.JPEG)"></div>
           <div class="slide_container">
             <div class="container">
               <div class="row">
@@ -182,7 +182,7 @@
 
         <!-- Slide -->
         <div class="owl-item">
-          <div class="home_slider_background" style="background-image:url(<?php echo base_url(); ?>../asstes/images/home_slider_1.jpg)"></div>
+          <div class="home_slider_background" style="background-image:url(<?php echo base_url(); ?>/asstes/images/home_slider_1.jpg)"></div>
           <div class="slide_container">
             <div class="container">
               <div class="row">
@@ -193,15 +193,15 @@
                     <div class="home_details">
                       <ul class="home_details_list d-flex flex-row align-items-center justify-content-start">
                         <li>
-                          <div class="home_details_image"><img src="<?php echo base_url(); ?>../asstes/images/icon_1.png" alt=""></div>
+                          <div class="home_details_image"><img src="<?php echo base_url(); ?>/asstes/images/icon_1.png" alt=""></div>
                           <span> 650 Ftsq</span>
                         </li>
                         <li>
-                          <div class="home_details_image"><img src="<?php echo base_url(); ?>../asstes/images/icon_2.png" alt=""></div>
+                          <div class="home_details_image"><img src="<?php echo base_url(); ?>/asstes/images/icon_2.png" alt=""></div>
                           <span> 3 Bedrooms</span>
                         </li>
                         <li>
-                          <div class="home_details_image"><img src="<?php echo base_url(); ?>../asstes/images/icon_3.png" alt=""></div>
+                          <div class="home_details_image"><img src="<?php echo base_url(); ?>/asstes/images/icon_3.png" alt=""></div>
                           <span> 2 Bathrooms</span>
                         </li>
                       </ul>
@@ -216,7 +216,7 @@
 
         <!-- Slide -->
         <div class="owl-item">
-          <div class="home_slider_background" style="background-image:url(<?php echo base_url(); ?>../asstes/images/home_slider_1.jpg)"></div>
+          <div class="home_slider_background" style="background-image:url(<?php echo base_url(); ?>/asstes/images/home_slider_1.jpg)"></div>
           <div class="slide_container">
             <div class="container">
               <div class="row">
@@ -227,15 +227,15 @@
                     <div class="home_details">
                       <ul class="home_details_list d-flex flex-row align-items-center justify-content-start">
                         <li>
-                          <div class="home_details_image"><img src="<?php echo base_url(); ?>../asstes/images/icon_1.png" alt=""></div>
+                          <div class="home_details_image"><img src="<?php echo base_url(); ?>/asstes/images/icon_1.png" alt=""></div>
                           <span> 650 Ftsq</span>
                         </li>
                         <li>
-                          <div class="home_details_image"><img src="<?php echo base_url(); ?>../asstes/images/icon_2.png" alt=""></div>
+                          <div class="home_details_image"><img src="<?php echo base_url(); ?>/asstes/images/icon_2.png" alt=""></div>
                           <span> 3 Bedrooms</span>
                         </li>
                         <li>
-                          <div class="home_details_image"><img src="<?php echo base_url(); ?>../asstes/images/icon_3.png" alt=""></div>
+                          <div class="home_details_image"><img src="<?php echo base_url(); ?>/asstes/images/icon_3.png" alt=""></div>
                           <span> 2 Bathrooms</span>
                         </li>
                       </ul>
@@ -444,7 +444,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-3">
-            <div class="footer_logo"><a href="#"><img width="100px;" src="<?php echo base_url(); ?>../asstes/images/logo_pagina.png" alt=""></a></div>
+            <div class="footer_logo"><a href="#"><img width="100px;" src="<?php echo base_url(); ?>/asstes/images/logo_pagina.png" alt=""></a></div>
           </div>
          
         </div>
@@ -522,7 +522,7 @@
                 <div class="map">
                   <div id="google_map" class="google_map">
                     <div class="map_container">
-                      <img src="<?php echo base_url(); ?>../asstes/images/mapa_direccion.jpg" width="100%">
+                      <img src="<?php echo base_url(); ?>/asstes/images/mapa_direccion.jpg" width="100%">
                     </div>
                   </div>
                 </div>
@@ -537,12 +537,12 @@
    <!-- Modal Small-->
 
 
-<script src="<?php echo base_url(); ?>../asstes/js/jquery-3.2.1.min.js"></script>
-<script src="<?php echo base_url(); ?>../asstes/styles/bootstrap4/popper.js"></script>
-<script src="<?php echo base_url(); ?>../asstes/styles/bootstrap4/bootstrap.min.js"></script>
-<script src="<?php echo base_url(); ?>../asstes/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="<?php echo base_url(); ?>../asstes/plugins/easing/easing.js"></script>
-<script src="<?php echo base_url(); ?>../asstes/plugins/parallax-js-master/parallax.min.js"></script>
-<script src="<?php echo base_url(); ?>../asstes/js/custom.js"></script>
+<script src="<?php echo base_url(); ?>/asstes/js/jquery-3.2.1.min.js"></script>
+<script src="<?php echo base_url(); ?>/asstes/styles/bootstrap4/popper.js"></script>
+<script src="<?php echo base_url(); ?>/asstes/styles/bootstrap4/bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>/asstes/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="<?php echo base_url(); ?>/asstes/plugins/easing/easing.js"></script>
+<script src="<?php echo base_url(); ?>/asstes/plugins/parallax-js-master/parallax.min.js"></script>
+<script src="<?php echo base_url(); ?>/asstes/js/custom.js"></script>
 </body>
 </html>

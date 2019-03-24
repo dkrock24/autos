@@ -33,10 +33,10 @@
    		// Validar Permiso a la Url
 
    		if(isset($menu_session)){
-   			$url_acceso = validarUrl_method($menu_session);
-			if( !$url_acceso ){
+   			//$url_acceso = validarUrl_method($menu_session);
+			//if( !$url_acceso ){
 				//header("location: ".base_url()."login/logout");
-			}
+			//}
    		}
    	}
 

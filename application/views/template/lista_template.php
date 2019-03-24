@@ -1,4 +1,4 @@
-<script src="<?php echo base_url(); ?>../asstes/vendor/jquery/dist/jquery.js"></script>
+<script src="<?php echo base_url(); ?>/asstes/vendor/jquery/dist/jquery.js"></script>
 
 <script type="text/javascript">
     
@@ -103,11 +103,9 @@
                                         <ul role="menu" class="dropdown-menu">
                                             <li><a href="ver/<?php echo $table->$id; ?>">Ver</a></li>
                                             <li><a href="editar/<?php echo $table->$id; ?>">Modificar</a></li>
-                                            <li><a href="vendido">Vendido</a></li>
-                                            <li><a href="alquilado">Alquilado</a></li>
-                                                                                                             
+                                                                                                                                                         
                                             <li class="divider"></li>  
-                                            <li><a href="">Eliminar</a></li>
+                                            
                                         </ul>
                                     </div>
                                 

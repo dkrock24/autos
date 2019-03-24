@@ -4,27 +4,27 @@
   <head>
     
     <!-- Font Icons CSS-->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/vendor/fontawesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/vendor/simple-line-icons/css/simple-line-icons.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/vendor/animate.css/animate.min.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/vendor/whirl/dist/whirl.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/vendor/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/vendor/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/vendor/whirl/dist/whirl.css">
 
      <!-- DATATABLES-->
-   <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/vendor/datatables-colvis/css/dataTables.colVis.css">
-   <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/vendor/datatables/media/css/dataTables.bootstrap.css">
-   <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/vendor/dataTables.fontAwesome/index.css">
+   <link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/vendor/datatables-colvis/css/dataTables.colVis.css">
+   <link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/vendor/datatables/media/css/dataTables.bootstrap.css">
+   <link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/vendor/dataTables.fontAwesome/index.css">
    
-    <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/vendor/sweetalert/dist/sweetalert.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/css/bootstrap.css" id="bscss">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/vendor/sweetalert/dist/sweetalert.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/css/bootstrap.css" id="bscss">
 
-    <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/vendor/select2-bootstrap-theme/dist/select2-bootstrap.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/vendor/select2/dist/css/select2.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/vendor/select2-bootstrap-theme/dist/select2-bootstrap.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/vendor/select2/dist/css/select2.css">
     
 
-    <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/css/app.css" id="maincss">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/css/app.css" id="maincss">
 
-    <script src="<?php echo base_url(); ?>../asstes/vendor/jquery/dist/jquery.js"></script>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>../asstes/css/HoldOn.min.css">
+    <script src="<?php echo base_url(); ?>/asstes/vendor/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/asstes/css/HoldOn.min.css">
 
     <script type="text/javascript">
       $(document).ready(function(){
@@ -62,10 +62,10 @@
                       AUTOS
                     </h1>
                     <!--
-                     <img src="<?php echo base_url(); ?>../asstes/img/logo.png" alt="App Logo" class="img-responsive"> -->  
+                     <img src="<?php echo base_url(); ?>/asstes/img/logo.png" alt="App Logo" class="img-responsive"> -->  
                   </div>
                   <div class="brand-logo-collapsed">
-                     <img src="<?php echo base_url(); ?>../asstes/img/logo-single.png" alt="App Logo" class="img-responsive">
+                     <img src="<?php echo base_url(); ?>/asstes/img/logo-single.png" alt="App Logo" class="img-responsive">
                   </div>
                </a>
             </div>
@@ -129,7 +129,7 @@
                      
                         <div class="user-block-picture" data-toggle="dropdown">
                               <div class="user-block-status">
-                                 <img src="<?php echo base_url(); ?>../asstes/img/user/02.jpg" alt="Avatar" width="60" height="60" class="img-thumbnail img-circle">
+                                 <img src="<?php echo base_url(); ?>/asstes/img/user/02.jpg" alt="Avatar" width="60" height="60" class="img-thumbnail img-circle">
                                  <div class="circle circle-success circle-lg"></div>
                               </div>
                            </div>
@@ -229,7 +229,7 @@
             <!-- START Search form-->
             <form role="search" action="search.html" class="navbar-form">
                <div class="form-group has-feedback">
-                  <input type="text" placeholder="Type and hit enter ..." class="form-control">
+                  <input type="text" placeholder="Type and hit enter " class="form-control">
                   <div data-search-dismiss="" class="fa fa-times form-control-feedback"></div>
                </div>
                <button type="submit" class="hidden btn btn-default">Submit</button>

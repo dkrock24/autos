@@ -36,12 +36,31 @@ class Autos extends CI_Controller {
 	public function index()
 	{
 		// Este metodo carga la vista del login del sistema
-		$data['brands'] = $this->Acceso_model->brands();
-		$data['autos'] = $this->Autos_model->catalogo();
+		$data['brands'] = $this->Autos_model->brandsUsadas();
+		if($_POST){
+			$data['autos'] = $this->Autos_model->catalogo($_POST);
+		}else{
+			$vacio=1;
+			$data['autos'] = $this->Autos_model->catalogo($vacio);	
+		}		
 		$data['alquiler'] = $this->Autos_model->catalogo_alquiler();
-		$data['home'] = 'index';
+		$data['persona'] = $this->Autos_model->persona();
+		$data['home'] = 'login';
 
 		$this->parser->parse('template', $data);
+	}
+
+	function detalle($id){
+		// Este metodo carga la vista del login del sistema
+		$data['detalle'] = $this->Autos_model->get_detalle_auto($id);
+		$data['funciones'] = $this->Autos_model->getFunciones($id);
+		$data['galeria'] = $this->Autos_model->get_galeria_auto($id);
+		$data['accesorios'] = $this->Autos_model->getAccesorios($id);
+		$data['persona'] = $this->Autos_model->persona();
+
+		$data['home'] = 'login';
+
+		$this->parser->parse('template/detalle', $data);
 	}
 
 	public function get_detalle_auto($id){

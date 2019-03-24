@@ -29,8 +29,8 @@
 
         $('#detalle').modal('show');
 
-        
     });
+    
 
     function get_detalle_auto(id){
         var table = "<table class='table table-hover'>";            
@@ -38,7 +38,7 @@
         var table_tr = "<tbody id='list'>";
 
         $.ajax({
-            url: "autos/get_detalle_auto/"+id,  
+            url: "get_detalle_auto/"+id,  
             datatype: 'json',      
             cache : false,                
 
@@ -99,20 +99,17 @@
         <div class="col">
           <div class="header_content d-flex flex-row align-items-center justify-content-start">
             <div class="logo">
-              <a href="#"><img src="<?php echo base_url(); ?>../asstes/images/logo.png" alt=""></a>
+              <a href="#"><img src="<?php echo base_url(); ?>../asstes/images/logo_pagina.png" alt=""></a>
             </div>
             <nav class="main_nav">
               <ul>
-                <li class="active"><a href="index.html">Home</a></li>
-                <li><a href="about.html">About us</a></li>
-                <li><a href="properties.html">Properties</a></li>
-                <li><a href="news.html">News</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li class="active"><a href="index.html">Inicio</a></li>
+                <li><a href="contact.html">Contacto</a></li>
               </ul>
             </nav>
             <div class="phone_num ml-auto">
               <div class="phone_num_inner">
-                <img src="<?php echo base_url(); ?>../asstes/images/phone.png" alt=""><span>652-345 3222 11</span>
+                <img src="<?php echo base_url(); ?>../asstes/images/phone.png" alt=""><span> <?php echo $persona[0]->phone1; ?></span>
               </div>
             </div>
             <div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
@@ -130,20 +127,16 @@
       <div class="logo menu_logo">
         <a href="#">
           <div class="logo_container d-flex flex-row align-items-start justify-content-start">
-            <div class="logo_image"><div><img src="<?php echo base_url(); ?>../asstes/images/logo.png" alt=""></div></div>
+            <div class="logo_image"><div><img src="<?php echo base_url(); ?>../asstes/images/logo_pagina.png" alt=""></div></div>
           </div>
         </a>
       </div>
       <ul>
-        <li class="menu_item"><a href="index.html">Home</a></li>
-        <li class="menu_item"><a href="about.html">About us</a></li>
-        <li class="menu_item"><a href="#">Speakers</a></li>
-        <li class="menu_item"><a href="#">Tickets</a></li>
-        <li class="menu_item"><a href="news.html">News</a></li>
-        <li class="menu_item"><a href="contact.html">Contact</a></li>
+        <li class="active"><a href="index.html">Inicio</a></li>
+        <li><a href="contact.html">Contacto</a></li>
       </ul>
     </div>
-    <div class="menu_phone"><span>call us: </span>652 345 3222 11</div>
+    <div class="menu_phone"><span>Llamanos : </span><?php echo $persona[0]->phone1; ?></div>
   </div>
   
   <!-- Home -->
@@ -249,16 +242,17 @@
         <div class="col">
           <div class="home_search_container" style="width: 70%; left:15%;">
             <div class="home_search_content">
-              <form action="#" class="search_form d-flex flex-row align-items-start justfy-content-start">
+              <form action="index" method="post" class="search_form d-flex flex-row align-items-start justfy-content-start">
                 <div class="search_form_content d-flex flex-row align-items-start justfy-content-start flex-wrap">
                   <div style="width: 50%">
-                    <select class="search_form_select">                      
-                      <option value="c">Comprar</option>
-                      <option value="r">Rentar</option>
+                    <select class="search_form_select form-control" name="proposito">                      
+                      <option value="Car_sale">Comprar</option>
+                      <option value="Car_rental">Rentar</option>
                     </select>
                   </div>
                   <div style="width: 50%;">
-                    <select class="search_form_select form-control">
+                    <select class="search_form_select form-control" name="marca">
+                      <option value="0">Todos</option>
                       <?php
                       foreach ($brands as $key => $value) {
                         ?>
@@ -270,7 +264,7 @@
                   </div>
              
                 </div>
-                <button class="search_form_button ml-auto">search</button>
+                <button class="search_form_button ml-auto">Buscar</button>
               </form>
             </div>
           </div>
@@ -297,8 +291,10 @@
               <!-- Slide -->
               <?php
               $auto = 0;
+              if($autos){
               foreach ($autos as $key => $value) {
-                if($auto != $value->Car_id ){
+                
+                if($auto != $value->Car_id){
                   ?>
                   <div class="owl-item">
                     <div class="recent_item">
@@ -306,7 +302,7 @@
                         <div class="recent_item_image">
                             <img src="data: <?php echo $value->Gallery_type ?> ;<?php echo 'base64'; ?>,<?php echo base64_encode( $value->Gallery_image ) ?>" clas="preview_producto" style="width:400px" />
                           
-                          <div class="tag_featured property_tag"><a href="#">Detalle</a></div>
+                          <div class="tag_featured property_tag" id="<?php echo $value->Car_id; ?>"><span class="btn btn-default" style="color: white;">Detalle</span></div>
                         </div>
                         <div class="recent_item_body text-center">
                           <div class="recent_item_location"><?php echo $value->Car_year.' / '.$value->Car_color; ?></div>
@@ -314,9 +310,24 @@
                           <div class="recent_item_price">$ <?php echo $value->Car_price_sale; ?></div>
                         </div>
                         <div class="recent_item_footer d-flex flex-row align-items-center justify-content-start">
+                          <!--
                           <div><div class="recent_icon"><i class="fa fa-check"></i></div><span>Negociable </span> | </div>
-                          <div><div class="recent_icon"><i class="fa fa-check"></i></div><span>Venta | </span></div>
+                          -->
+                          <div>
+                              <div class="recent_icon">
+                                <?php
+                                $icono = "fa fa-check";
+                                if($value->Car_sale==0){
+                                  $icono = "fa fa-close";
+                                }
+                                ?>
+                              <i class="<?php echo $icono; ?>"></i>
+                              </div><span>Venta | </span>
+                          </div>
+
                           <div><div class="recent_icon"><i class="fa fa-check"></i></div><span>Alquiler |</span></div>
+                        
+                        <div class="auto_fotos" id=""><a href="detalle/<?php echo $value->Car_id; ?>" class="btn btn-info">Galeria</a></div>
                         </div>
                       </div>
                     </div>
@@ -324,7 +335,7 @@
 
                   <?php
                   $auto = $value->Car_id;
-                }
+                }}
               }
               ?>
               
@@ -373,16 +384,18 @@
               </a>  
             </div>
             <div class="recent_item_footer d-flex flex-row align-items-center justify-content-start">
-                <div>
-                    <div class="recent_icon">
-                        <i class="fa fa-check"></i>
-                    </div>
-                    <span>$  <?php echo $value->Car_price_rental ?> Por Dia</span> 
-                </div>  
-                <div><div class="recent_icon"></div><span>
-                    <div class="tag_featured property_tag" id="<?php echo $value->Car_id; ?>" style="top: -5px;"><span class="btn btn-default">Detalle</span></div>  
-                </span></div>
-                         
+               
+              <div>
+                              <div class="recent_icon">
+                                
+                              <i class="fa fa-check"></i>
+                              </div><span>$ <?php echo $value->Car_price_rental ?> / Dia </span>
+                          </div>
+
+                          <div><div class="tag_featured property_tag recent_icon" id="<?php echo $value->Car_id; ?>" ></div><span class=" btn btn-default tag_featured" >Detalle </span></div>
+                        
+                        <div class="auto_fotos" id=""><a href="detalle/<?php echo $value->Car_id; ?>" class="btn btn-info">Galeria</a></div>
+
             </div>
 
           </div>
@@ -411,75 +424,22 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-3">
-            <div class="footer_logo"><a href="#"><img src="<?php echo base_url(); ?>../asstes/images/logo_large.png" alt=""></a></div>
+            <div class="footer_logo"><a href="#"><img width="100px;" src="<?php echo base_url(); ?>../asstes/images/logo_pagina.png" alt=""></a></div>
           </div>
-          <div class="col-lg-9 d-flex flex-column align-items-start justify-content-end">
-            <div class="footer_title">Latest Properties</div>
-          </div>
+         
         </div>
         <div class="row">
           <div class="col-lg-3 footer_col">
             <div class="footer_about">
-              <div class="footer_about_text">Donec in tempus leo. Aenean ultricies mauris sed quam lacinia lobortis. Cras ut vestibulum enim, in gravida nulla. Curab itur ornare nisl at sagittis cursus.</div>
+              <div class="footer_about_text">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | GeoAutoFacil <i class="fa fa-check" aria-hidden="true"></i> by Rafael Gutierrez</div>
             </div>
           </div>
-          <div class="col-lg-3 footer_col">
-            <div class="footer_latest d-flex flex-row align-items-start justify-content-start">
-              <div><div class="footer_latest_image"><img src="<?php echo base_url(); ?>../asstes/images/footer_latest_1.jpg" alt=""></div></div>
-              <div class="footer_latest_content">
-                <div class="footer_latest_location">Miami</div>
-                <div class="footer_latest_name"><a href="#">Sea view property</a></div>
-                <div class="footer_latest_price">$ 1. 234 981</div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 footer_col">
-            <div class="footer_latest d-flex flex-row align-items-start justify-content-start">
-              <div><div class="footer_latest_image"><img src="<?php echo base_url(); ?>../asstes/images/footer_latest_2.jpg" alt=""></div></div>
-              <div class="footer_latest_content">
-                <div class="footer_latest_location">Miami</div>
-                <div class="footer_latest_name"><a href="#">Town House</a></div>
-                <div class="footer_latest_price">$ 1. 234 981</div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 footer_col">
-            <div class="footer_latest d-flex flex-row align-items-start justify-content-start">
-              <div><div class="footer_latest_image"><img src="<?php echo base_url(); ?>../asstes/images/footer_latest_3.jpg" alt=""></div></div>
-              <div class="footer_latest_content">
-                <div class="footer_latest_location">Miami</div>
-                <div class="footer_latest_name"><a href="#">Modern House</a></div>
-                <div class="footer_latest_price">$ 1. 234 981</div>
-              </div>
-            </div>
-          </div>
+ <div class="footer_phone ml-auto" style="color: white;"><span>Telefono : </span><?php echo $persona[0]->phone1; ?></div>
+
         </div>
       </div>
     </div>
-    <div class="footer_bar">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <div class="footer_bar_content d-flex flex-row align-items-center justify-content-start">
-              <div class="cr"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-</div>
-              <div class="footer_nav">
-                <ul>
-                  <li><a href="index.html">Home</a></li>
-                  <li><a href="#">About us</a></li>
-                  <li><a href="properties.html">Properties</a></li>
-                  <li><a href="news.html">News</a></li>
-                  <li><a href="contact.html">Contact</a></li>
-                </ul>
-              </div>
-              <div class="footer_phone ml-auto"><span>call us: </span>652 345 3222 11</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </footer>
 </div>
 
@@ -487,15 +447,36 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
    <div id="detalle" tabindex="-1" role="dialog" aria-labelledby="producto_asociado_modal"  class="modal fade">
       <div class="modal-dialog modal-lg">
          <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="background: #ffc107">
                <button type="button" data-dismiss="modal" aria-label="Close" class="close">
-                  <span aria-hidden="true">&times;</span>
+                  <span aria-hidden="true">&times;Cerrar</span>
                </button>
-               <h4 id="myModalLabelLarge" class="modal-title">Auto Detalle</h4>
+               
             </div>
             <div class="modal-body">
                 <p class="auto_detalle"></p>                                 
                
+            </div>
+            <div class="modal-footer">
+               <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>               
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- Modal Small-->
+
+   <!-- Modal Large-->
+   <div id="fotos" tabindex="-1" role="dialog" aria-labelledby="producto_asociado_modal"  class="modal fade">
+      <div class="modal-dialog modal-lg">
+         <div class="modal-content">
+            <div class="modal-header" style="background: #ffc107">
+               <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                  <span aria-hidden="true">&times;Cerrar</span>
+               </button>
+               
+            </div>
+            <div class="modal-body">                                              
+               <span class="fotos"></span>
             </div>
             <div class="modal-footer">
                <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>               

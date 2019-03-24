@@ -22,13 +22,17 @@ class Autos_model extends CI_Model {
         $this->db->join(self::brand_line.' l', ' on c.Brand_Line_id = l.Brand_Line_id');
         $this->db->join(self::brand.' b', ' on b.Brand_id = l.Brand_id');
         $this->db->join(self::gallerycar.' g', ' on g.Car_id = c.Car_id');
+        $this->db->where('c.Car_status', 1 );
         
         if($filtro!=1 && $filtro['marca']!=0){
             $this->db->where('b.Brand_id', $filtro['marca'] );
             if(isset($filtro['proposito'])){
                 $this->db->where('c.'.$filtro['proposito'], 1 );
             }
-            
+        }else{
+            if(isset($filtro['proposito'])){
+                $this->db->where('c.'.$filtro['proposito'], 1 );
+            }
         }
         
         $query = $this->db->get(); 
@@ -204,8 +208,8 @@ class Autos_model extends CI_Model {
             'Car_rental' => 1
         );
 
-        $this->db->where('Car_id', $car['Car_id'] ); 
-        $this->db->update(self::car, $rental ); 
+        //$this->db->where('Car_id', $car['Car_id'] ); 
+        //$this->db->update(self::car, $rental ); 
     }
 
     function update_alquiler($car){
@@ -239,8 +243,8 @@ class Autos_model extends CI_Model {
             'Car_rental' => $rentado
         );
 
-        $this->db->where('Car_id', $car['Car_id'] ); 
-        $this->db->update(self::car, $rental ); 
+        //$this->db->where('Car_id', $car['Car_id'] ); 
+        //$this->db->update(self::car, $rental ); 
     }
 
     function record_count(){

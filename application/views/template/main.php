@@ -30,6 +30,23 @@
         $('#detalle').modal('show');
 
     });
+
+    $(document).on('click', '.detalle_btn', function(){
+
+        var id = $(this).attr('id');
+        get_detalle_auto(id);
+
+        $('#detalle').modal('show');
+
+    });
+
+    $(document).on('click', '.contacto_mapa', function(){
+  
+       $('#mapa').modal('show');
+
+    });
+
+    
     
 
     function get_detalle_auto(id){
@@ -103,8 +120,8 @@
             </div>
             <nav class="main_nav">
               <ul>
-                <li class="active"><a href="index.html">Inicio</a></li>
-                <li><a href="contact.html">Contacto</a></li>
+                <li class="active"><a href="index">Inicio</a></li>
+                <li><a href="#" class="contacto_mapa">Contacto</a></li>
               </ul>
             </nav>
             <div class="phone_num ml-auto">
@@ -371,6 +388,8 @@
       <!-- City -->
 
       <?php
+      if ($alquiler) {
+      
       foreach ($alquiler as $key => $value) {
           ?>
 
@@ -392,8 +411,8 @@
                               </div><span>$ <?php echo $value->Car_price_rental ?> / Dia </span>
                           </div>
 
-                          <div><div class="tag_featured property_tag recent_icon" id="<?php echo $value->Car_id; ?>" ></div><span class=" btn btn-default tag_featured" >Detalle </span></div>
-                        
+                      
+                        <div class="auto_fotos"><span id="<?php echo $value->Car_id; ?>" class="btn btn-info detalle_btn">Detalle</span></div>
                         <div class="auto_fotos" id=""><a href="detalle/<?php echo $value->Car_id; ?>" class="btn btn-info">Galeria</a></div>
 
             </div>
@@ -401,6 +420,7 @@
           </div>
 
           <?php
+        }
       }
       ?>
       
@@ -477,6 +497,36 @@
             </div>
             <div class="modal-body">                                              
                <span class="fotos"></span>
+            </div>
+            <div class="modal-footer">
+               <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>               
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- Modal Small-->
+
+     <!-- Modal Large-->
+   <div id="mapa" tabindex="-1" role="dialog" aria-labelledby="producto_asociado_modal"  class="modal fade">
+      <div class="modal-dialog modal-lg">
+         <div class="modal-content">
+            <div class="modal-header" style="background: #ffc107">
+               <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+                  <span aria-hidden="true">&times;Cerrar</span>
+               </button>
+               
+            </div>
+            <div class="modal-body">                                              
+               <div class="contact_map">
+                <!-- Google Map -->
+                <div class="map">
+                  <div id="google_map" class="google_map">
+                    <div class="map_container">
+                      <img src="<?php echo base_url(); ?>../asstes/images/mapa_direccion.jpg" width="100%">
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="modal-footer">
                <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>               

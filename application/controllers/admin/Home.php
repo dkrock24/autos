@@ -56,7 +56,7 @@ class Home extends CI_Controller {
 			header("location: info");
 	    }
 		
-		$data['home'] = 'index';
+		$data['home'] = 'welcome';
 		$data['menu'] = $this->session->menu;		
 
 		$this->parser->parse('template2', $data);

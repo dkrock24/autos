@@ -45,7 +45,7 @@ class Autos extends CI_Controller {
 	}
 
 	public function index(){
-
+		$_SESSION['per_page']='';
 		//Paginacion
 		$contador_tabla;
 		if( isset( $_POST['total_pagina'] )){

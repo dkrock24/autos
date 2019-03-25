@@ -41,6 +41,7 @@ class Linea extends CI_Controller {
 	public function index(){
 
 		//Paginacion
+		$_SESSION['per_page']='';
 		$contador_tabla;
 		if( isset( $_POST['total_pagina'] )){
 			$per_page = $_POST['total_pagina'];

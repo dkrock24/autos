@@ -58,7 +58,7 @@ class Autos extends CI_Controller {
 		}
 		
 		$total_row = $this->Autos_model->record_count();
-		$config = paginacion($total_row, $_SESSION['per_page'] , "admin/moneda/index");
+		$config = paginacion($total_row, $_SESSION['per_page'] , "admin/autos/index");
 		$this->pagination->initialize($config);
 		if($this->uri->segment(4)){
 			if($_SESSION['per_page']!=0){

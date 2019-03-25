@@ -52,7 +52,7 @@ class Functiones extends CI_Controller {
 		}
 		
 		$total_row = $this->Functiones_model->record_count();
-		$config = paginacion($total_row, $_SESSION['per_page'] , "admin/giros/index");
+		$config = paginacion($total_row, $_SESSION['per_page'] , "admin/functiones/index");
 		$this->pagination->initialize($config);
 		if($this->uri->segment(4)){
 			if($_SESSION['per_page']!=0){

@@ -31,7 +31,7 @@
                                             <div class="form-group">
                                                 <label for="inputPassword3" class="col-sm-2 control-label no-padding-right">Descripcion</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="Accesorios_descripcion" name="Accesorios_descripcion" placeholder="Codigo" value="">
+                                                    <input type="text" class="form-control" id="Accesorios_descripcion" name="Accesorios_descripcion" placeholder="" value="">
                                                     
                                                 </div>
                                             </div>

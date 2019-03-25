@@ -52,7 +52,7 @@ class Accesorio extends CI_Controller {
 		}
 		
 		$total_row = $this->Accesorio_model->record_count();
-		$config = paginacion($total_row, $_SESSION['per_page'] , "admin/pais/index");
+		$config = paginacion($total_row, $_SESSION['per_page'] , "admin/accesorio/index");
 		$this->pagination->initialize($config);
 		if($this->uri->segment(4)){
 			if($_SESSION['per_page']!=0){

@@ -53,7 +53,7 @@ class Linea extends CI_Controller {
 		}
 		
 		$total_row = $this->Linea_model->record_count();
-		$config = paginacion($total_row, $_SESSION['per_page'] , "admin/atributos/index");
+		$config = paginacion($total_row, $_SESSION['per_page'] , "admin/linea/index");
 		$this->pagination->initialize($config);
 		if($this->uri->segment(4)){
 			if($_SESSION['per_page']!=0){
